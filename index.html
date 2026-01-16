@@ -1,1 +1,263 @@
-nhwhw
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Shubham & Adity — Forever</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+body{
+  font-family:Poppins,sans-serif;
+  background:linear-gradient(180deg,#ff9acb,#ff3f87);
+  color:#fff;
+  overflow-x:hidden;
+}
+section{
+  min-height:100vh;
+  padding:60px 20px;
+  scroll-snap-align:start;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+/* LOCK */
+#lock{
+  position:fixed;inset:0;
+  background:#ff3f87;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+#lock input{
+  padding:12px 20px;
+  border-radius:30px;
+  border:none;
+  outline:none;
+  margin-top:20px;
+}
+#lock button{
+  margin-top:15px;
+  padding:10px 25px;
+  border:none;
+  border-radius:30px;
+  background:#fff;
+  color:#ff3f87;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* PROGRESS */
+#progress{
+  position:fixed;
+  top:20px;right:20px;
+  font-size:.9rem;
+  z-index:1000;
+}
+
+/* PHOTOS */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:20px;
+  max-width:1100px;
+}
+.photo{
+  aspect-ratio:1/1;
+  overflow:hidden;
+  border-radius:20px;
+  box-shadow:0 20px 40px rgba(0,0,0,.25);
+  transition:transform .3s;
+}
+.photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* LETTER */
+.letter{
+  max-width:800px;
+  background:rgba(255,255,255,.15);
+  padding:50px;
+  border-radius:30px;
+  backdrop-filter:blur(10px);
+  box-shadow:0 40px 80px rgba(0,0,0,.3);
+}
+.letter h2{
+  font-family:'Great Vibes',cursive;
+  font-size:3rem;
+  margin-bottom:20px;
+}
+.letter p{
+  line-height:1.9;
+  margin-bottom:18px;
+}
+
+/* BALLOONS */
+.balloons{display:flex;gap:30px;flex-wrap:wrap;justify-content:center}
+.balloon{
+  width:90px;height:110px;
+  background:linear-gradient(#ff8fc7,#ff3f87);
+  border-radius:50%;
+  cursor:pointer;
+  animation:float 6s ease-in-out infinite;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-30px)}
+}
+
+/* POPUP */
+#popup{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+#popup div{
+  background:#fff;
+  color:#ff3f87;
+  padding:40px;
+  border-radius:30px;
+}
+
+/* HEARTS */
+.heart{
+  position:fixed;
+  color:#fff;
+  animation:fade 2s linear forwards;
+}
+@keyframes fade{
+  to{opacity:0;transform:translateY(-40px)}
+}
+</style>
+</head>
+
+<body>
+
+<div id="lock">
+  <h2>Only for Shubham & Adity</h2>
+  <input type="password" id="pwd" placeholder="password">
+  <button onclick="unlock()">Unlock</button>
+</div>
+
+<div id="progress">01 / 06</div>
+
+<audio id="music" src="music.mp3" loop></audio>
+
+<section>
+  <h1 style="font-family:'Great Vibes';font-size:4rem">Adity & Shubham</h1>
+  <p id="type"></p>
+</section>
+
+<section>
+  <h2>Our Moments</h2>
+  <div class="grid">
+    <!-- 26 photos -->
+    <script>
+      for(let i=1;i<=26;i++){
+        document.write(`<div class="photo"><img src="img${i}.png"></div>`);
+      }
+    </script>
+  </div>
+</section>
+
+<section>
+  <h2>Days Together ❤️</h2>
+  <h1 id="days"></h1>
+</section>
+
+<section>
+  <h2>Touch the balloons</h2>
+  <div class="balloons">
+    <div class="balloon" data="You are my home, Adity."></div>
+    <div class="balloon" data="I choose you daily."></div>
+    <div class="balloon" data="Forever means us."></div>
+  </div>
+</section>
+
+<section>
+  <div class="letter">
+    <h2>My Love, Adity</h2>
+    <p>
+      Loving you changed the way I breathe, the way I dream,
+      the way my heart understands peace.
+    </p>
+    <p>
+      This is not a promise for perfect days,
+      but for real ones — with you.
+    </p>
+    <p style="font-family:'Great Vibes';font-size:2rem">
+      Forever yours,<br>Shubham
+    </p>
+  </div>
+</section>
+
+<section>
+  <h1>“Adity, this is forever — Shubham”</h1>
+</section>
+
+<div id="popup"><div id="popText"></div></div>
+
+<script>
+let sections=document.querySelectorAll('section');
+let idx=0;
+
+function unlock(){
+  if(pwd.value==="adity"){
+    lock.style.display="none";
+    music.play();
+  }
+}
+
+document.addEventListener('click',e=>{
+  if(lock.style.display!=="none")return;
+  if(idx<sections.length-1){
+    idx++;
+    sections[idx].scrollIntoView({behavior:"smooth"});
+    progress.innerText=`0${idx+1} / 06`;
+  }
+});
+
+document.addEventListener('mousemove',e=>{
+  let h=document.createElement('div');
+  h.className='heart';
+  h.innerHTML='❤';
+  h.style.left=e.clientX+'px';
+  h.style.top=e.clientY+'px';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),2000);
+});
+
+const start=new Date("2025-03-12");
+setInterval(()=>{
+  const now=new Date();
+  days.innerText=Math.floor((now-start)/86400000)+" days";
+},1000);
+
+document.querySelectorAll('.balloon').forEach(b=>{
+  b.onclick=()=>{
+    popText.innerText=b.getAttribute('data');
+    popup.style.display="flex";
+  }
+});
+popup.onclick=()=>popup.style.display="none";
+
+let text="I love you, Adity.";
+let i=0;
+setInterval(()=>{
+  if(i<text.length)type.innerText+=text[i++];
+},120);
+</script>
+
+</body>
+</html>
